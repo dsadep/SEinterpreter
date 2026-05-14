@@ -35,7 +35,9 @@ class Parser:
             if op == '*':
                 im_result *= self.factor()
             else:
-                im_result /= self.factor()
+                div = self.factor()
+                if div != 0: im_result /= div
+                else: raise ZeroDivisionError('You cannot divide by zero')
         return im_result
         
     def factor(self):

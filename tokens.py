@@ -1,9 +1,8 @@
 default_dict = {
-    'NUM': float,
-    'ADD': '+',
-    'SUB': '-',
-    'MUL': '*',
-    'DIV': '/',
+    '+': 'ADD',
+    '-': 'SUB',
+    '*': 'MUL',
+    '/': 'DIV',
 }
 
 class Tokeniser:
@@ -14,8 +13,8 @@ class Tokeniser:
             tok = {}
             tok['type'] = None
             tok['value'] = item
-            if item in default_dict.values():
-                tok['type'] = next(key for key, value in default_dict.items() if value == item)
+            if item in default_dict.keys():
+                tok['type'] = default_dict.get(item)
             elif item == 'EOF':
                 tok['type'] = 'EOF'
             else: 
