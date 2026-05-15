@@ -1,4 +1,4 @@
-signs = {'+', '-', '*', '/'}
+signs = {'+', '-', '*', '/', '(', ')'}
 
 class Converter:
     @staticmethod 

@@ -3,6 +3,8 @@ default_dict = {
     '-': 'SUB',
     '*': 'MUL',
     '/': 'DIV',
+    '(': 'LPAREN',
+    ')': 'RPAREN'
 }
 
 class Tokeniser:
