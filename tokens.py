@@ -4,7 +4,16 @@ default_dict = {
     '*': 'MUL',
     '/': 'DIV',
     '(': 'LPAREN',
-    ')': 'RPAREN'
+    ')': 'RPAREN',
+    '^': 'POWER',
+    'or': 'OR',
+    'and': 'AND',
+    '>=': 'GE',
+    '<=': 'LE',
+    '>': 'GT',
+    '<': 'LT',
+    '==': 'EQ',
+    '!=': 'NEQ',
 }
 
 class Tokeniser:

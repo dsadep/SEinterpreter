@@ -1,4 +1,10 @@
-signs = {'+', '-', '*', '/', '(', ')'}
+signs = {'+', '-', '*', '/', '(', ')', '^'}
+words = {'and', 'or'}
+comparison_signs = {'>', '<', '=', '!'}
+comparison_operands = {'>', '<', '==', '!=', '>=', '<='}
+
+class UnexpectedCharacter(BaseException):
+    pass
 
 class Converter:
     @staticmethod 
@@ -6,19 +12,37 @@ class Converter:
         result = []
         i = 0
         while i < len(expression):
-            if expression[i] != ' ':
-                if expression[i] in signs:
-                    result.append(expression[i])
+            current = expression[i]
+            if current != ' ':
+                if current in signs:
+                    result.append(current)
                     i += 1
 
-                elif expression[i].isdigit():
+                elif current.isdigit():
                     end = Converter.parse_number(i, expression)
                     number = int(expression[i:end])
                     result.append(number)
                     i += len(str(number))
+
+                elif current.isalpha():
+                    end = Converter.parse_word(i, expression)
+                    word = expression[i:end].lower()
+                    if word in words: 
+                        result.append(word)
+                        i += len(word)
+                    else:
+                        raise SyntaxError('Unsopported operand')
+                
+                elif current in comparison_signs:
+                    end = Converter.parse_operand(i, expression)
+                    operand = expression[i:i+2] if end != i else current
+                    if operand in comparison_operands:
+                        result.append(operand)
+                        i += len(operand)
+                    else: raise SyntaxError('Unsupported operand')
+
                 else:
-                    print('unexpectedf character: {}'.format(expression[i]))
-                    i+=1
+                    raise SyntaxError('unexpectedf character: {}. expression cannot be calculated'.format(expression[i]))
             else:
                 i += 1
         result.append('EOF')
@@ -33,3 +57,19 @@ class Converter:
             else:
                 break
         return end
+    
+    @staticmethod
+    def parse_word(start, expression):
+        end = start
+        while end  < len(expression):
+            if expression[end].isalpha():
+                end += 1
+            else:
+                break
+        return end
+    
+    @staticmethod
+    def parse_operand(start, expression):
+        if expression[start:start+2] in comparison_operands:
+            return start + 1
+        return start
