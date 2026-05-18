@@ -2,6 +2,7 @@ signs = {'+', '-', '*', '/', '(', ')', '^'}
 words = {'and', 'or'}
 comparison_signs = {'>', '<', '=', '!'}
 comparison_operands = {'>', '<', '==', '!=', '>=', '<='}
+assign = '='
 
 class UnexpectedCharacter(BaseException):
     pass
@@ -27,11 +28,8 @@ class Converter:
                 elif current.isalpha():
                     end = Converter.parse_word(i, expression)
                     word = expression[i:end].lower()
-                    if word in words: 
-                        result.append(word)
-                        i += len(word)
-                    else:
-                        raise SyntaxError('Unsopported operand')
+                    result.append(word)
+                    i += len(word)
                 
                 elif current in comparison_signs:
                     end = Converter.parse_operand(i, expression)
@@ -39,6 +37,9 @@ class Converter:
                     if operand in comparison_operands:
                         result.append(operand)
                         i += len(operand)
+                    elif operand == assign:
+                        result.append(operand)
+                        i += 1 
                     else: raise SyntaxError('Unsupported operand')
 
                 else:

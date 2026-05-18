@@ -1,7 +1,9 @@
-from ast_nodes import NumberNode, UnaryOpNode, BinaryOpNode
-
+from ast_nodes import AssignNode, NumberNode, UnaryOpNode, BinaryOpNode, VarNode
 
 class Evaluator:
+    def __init__(self):
+        self.vars = {}
+
     def eval(self, node):
         if isinstance(node, NumberNode):
             return node.value
@@ -51,4 +53,13 @@ class Evaluator:
             if node.op == 'or':
                 return left or right
         
-        raise ValueError('Unknown operator {}'.format(node.op))
+        if isinstance(node, VarNode):
+            if node.name in self.vars:
+                return self.vars[node.name]
+            raise ValueError('No value')
+        
+        if isinstance(node, AssignNode):
+            value = self.eval(node.value)
+            self.vars[node.name] = value
+        else:
+            raise ValueError('Unknown operator {}'.format(node.op))
