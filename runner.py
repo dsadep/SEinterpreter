@@ -1,4 +1,5 @@
 from converter import Converter
+from evaluator import Evaluator
 from parser import Parser
 from tokens import Tokeniser
 
@@ -12,7 +13,9 @@ class Runner:
                 converted = Converter.convert(expression)
                 tokens = Tokeniser.tokenise(converted)
                 parser = Parser(tokens)
-                print(parser.expression())
+                evaluator = Evaluator()
+                result = evaluator.eval(parser.expression())
+                print(result)
             except Exception as e:
                 print(e.with_traceback(None))
                 continue
