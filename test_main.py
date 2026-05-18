@@ -1,9 +1,9 @@
 import pytest
 
-from converter import Converter
-from evaluator import Evaluator
-from parser import Parser
-from tokens import Tokeniser
+from handler.converter import Converter
+from handler.evaluator import Evaluator
+from handler.parser import Parser
+from handler.tokens import Tokeniser
 
 
 
