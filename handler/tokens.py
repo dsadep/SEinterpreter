@@ -14,6 +14,7 @@ default_dict = {
     '<': 'LT',
     '==': 'EQ',
     '!=': 'NEQ',
+    '=': 'ASSIGN'
 }
 
 class Tokeniser:
@@ -28,7 +29,9 @@ class Tokeniser:
                 tok['type'] = default_dict.get(item)
             elif item == 'EOF':
                 tok['type'] = 'EOF'
-            else: 
+            elif isinstance(item, int): 
                 tok['type'] = 'NUM'
+            else:
+                tok['type'] = 'VAR'
             tokens.append(tok)
         return tokens
