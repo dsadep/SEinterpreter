@@ -1,8 +1,9 @@
 import pytest
 
-from converter import Converter
-from parser import Parser
-from tokens import Tokeniser
+from handler.converter import Converter
+from handler.evaluator import Evaluator
+from handler.parser import Parser
+from handler.tokens import Tokeniser
 
 
 
@@ -11,7 +12,8 @@ def evaluate(expression):
     converted = Converter.convert(expression)
     tokens = Tokeniser.tokenise(converted)
     parser = Parser(tokens)
-    return parser.expression()
+    evaluator = Evaluator()
+    return evaluator.eval(parser.expression())
 
 class TestUnary:
     def test_unary_minus_simple(self):
